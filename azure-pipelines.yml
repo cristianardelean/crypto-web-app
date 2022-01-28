@@ -34,7 +34,7 @@ stages :
         publishLocation: 'pipeline'
 - stage: Deploy
   displayName: Deploy to AKS
-  environment: k8s-prod.default
+  environment: 'k8s-prod.default'
   dependsOn: Build
   pool: default
   variables:
