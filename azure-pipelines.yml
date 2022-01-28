@@ -19,7 +19,7 @@ stages:
         containerRegistry: 'acr-connection'
         repository: '$(imageRepo)'
         command: 'buildAndPush'
-        Dockerfile: '$(BuildSourcesDirectory)/app/Dockerfile'
+        Dockerfile: '$(Build.SourcesDirectory)/app/Dockerfile'
         tags: |
           $(tag)
           latest
