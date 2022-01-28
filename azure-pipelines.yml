@@ -1,32 +1,28 @@
-trigger: none
- 
-pool: default
- 
+trigger : none
+
+resources:
+  -repo: self
+
 variables:
-  - name: imageRepo
-    value: 'repo-crypto-app'
-  - name: dockerfile
-    value: 'app/Dockerfile'
-  - name: containerRegistry
-    value: 'registruaks'
- 
-stages :
+  tag: $(Build.BuildId)
+  imageRepo: crypto-webapp-repo
+stages:
 - stage: Build
-  displayName: Build and push stage
-  jobs: 
+  displayName: Build image
+  jobs:
   - job: Build
-    displayName: Build job
+    displayName: Build an image
+    pool: default
     steps:
     - task: Docker@2
-      displayName: Build and push an image to container registry
       inputs:
-         command: buildAndPush
-         repository: ${{ variables.imageRepo }}
-         dockerfile: ${{ variables.dockerfile }}
-         containerRegistry: ${{ variables.containerRegistry }}
-         tags: |
-           $(Build.BuildId)
-
+        containerRegistry: 'acr-connection'
+        repository: '$(imageRepo)'
+        command: 'buildAndPush'
+        Dockerfile: '$(BuildSourcesDirectory)/app/Dockerfile'
+        tags: |
+          $(tag)
+          latest
     - task: PublishPipelineArtifact@1
       inputs:
         targetPath: '$(Pipeline.Workspace)/s/kubernetes'
@@ -35,39 +31,31 @@ stages :
 - stage: Deploy
   displayName: Deploy to AKS
   dependsOn: Build
-  pool: default
   variables:
     acrsecret: k8sacrauth
-    acrdevurl: registruaks.azurecr.io/repo-crypto-app
   jobs:
-  - deployment: Deploy
+  - job: Deploy
     displayName: Deploy to AKS
     pool: default
-    environment: 'k8s-prod.default'
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - task: DownloadPipelineArtifact@2
-            inputs:
-              buildType: 'current'
-              artifactName: 'manifests'
-              targetPath: '$(Pipeline.Workspace)/manifests'
-          - task: KubernetesManifest@0
-            inputs:
-              action: 'createSecret'
-              kubernetesServiceConnection: 'k8s-connection'
-              namespace: 'default'
-              secretType: 'dockerRegistry'
-              secretName: '$(acrsecret)'
-              dockerRegistryEndpoint: 'registruaks'
-          - task: KubernetesManifest@0
-            inputs:
-              action: 'deploy'
-              kubernetesServiceConnection: 'k8s-connection'
-              namespace: 'default'
-              manifests: |
-                $(Pipeline.Workspace)/manifests/deployment.yml
-                $(Pipeline.Workspace)/manifests/service.yml
-              containers: '$(acrdevurl)/$(imageRepo):$tag'
-     
+    steps:
+      - task: DownloadPipelineArtifact@2
+        inputs:
+          buildType: 'current'
+          artifactName: 'manifests'
+          targetPath: '$(Pipeline.Workspace)/manifests'
+      - task: KubernetesManifest@0
+        inputs:
+          action: 'createSecret'
+          kubernetesServiceConnection: 'k8s-connection'
+          namespace: 'default'
+          secretType: 'dockerRegistry'
+          secretName: '$(acrsecret)'
+          dockerRegistryEndpoint: 'acr-connection'
+      - task: KubernetesManifest@0
+        inputs:
+          action: 'deploy'
+          kubernetesServiceConnection: 'k8s-connection'
+          namespace: 'default'
+          manifests: |
+          '$(Pipeline.Workspace)/manifests/deployment.yml'
+          '$(Pipeline.Workspace)/manifests/service.yml'
