@@ -45,7 +45,6 @@ stages:
         secretType: 'dockerRegistry'
         secretName: '$(acrsecret)'
         dockerRegistryEndpoint: 'acr-connection'
-
     - task: KubernetesManifest@0
       inputs:
         action: 'deploy'
