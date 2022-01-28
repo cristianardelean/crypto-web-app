@@ -7,5 +7,6 @@ spec:
     selector:
         app: cryptoapp
     ports:
-    - port: 80
-      targetPort: 8051
+     - protocol: TCP
+       port: 80
+       targetPort: 8051
