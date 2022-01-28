@@ -1,10 +1,6 @@
 trigger : none
 
-resources:
-  - repo: self
-
 variables:
-  tag: $(Build.BuildId)
   imageRepo: cryptoapp
 stages:
 - stage: Build
