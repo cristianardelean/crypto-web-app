@@ -56,7 +56,7 @@ stages :
           - task: KubernetesManifest@0
             inputs:
               action: 'createSecret'
-              kubernetesServiceConnection: 'k8s-connection'
+              kubernetesServiceConnection: 'k8s-prod-aks-crypto-default-1643254736046'
               namespace: 'default'
               secretType: 'dockerRegistry'
               secretName: '$(acrsecret)'
