@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: cryptoapp 
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: cryptoapp
+  template:
+    metadata:
+      labels:
+        app: cryptoapp
+    spec:
+      containers:
+        - name: cryptoapp 
+          image: registruaks.azurecr.io/repo-crypto-app
+          ports:
+          - containerPort: 80
