@@ -5,7 +5,7 @@ resources:
 
 variables:
   tag: $(Build.BuildId)
-  imageRepo: crypto-webapp-repo
+  imageRepo: cryptoapp
 stages:
 - stage: Build
   displayName: Build image
