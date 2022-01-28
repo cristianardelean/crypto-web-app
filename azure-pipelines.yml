@@ -1,7 +1,7 @@
 trigger : none
 
 resources:
-  -repo: self
+  - repo: self
 
 variables:
   tag: $(Build.BuildId)
@@ -57,5 +57,5 @@ stages:
           kubernetesServiceConnection: 'k8s-connection'
           namespace: 'default'
           manifests: |
-          '$(Pipeline.Workspace)/manifests/deployment.yml'
-          '$(Pipeline.Workspace)/manifests/service.yml'
+            '$(Pipeline.Workspace)/manifests/deployment.yml'
+            '$(Pipeline.Workspace)/manifests/service.yml'
