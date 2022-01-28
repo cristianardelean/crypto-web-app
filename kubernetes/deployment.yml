@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: cryptoapp 
-          image: registruaks.azurecr.io/crypto-webapp-repo
+          image: registruaks.azurecr.io/cryptoapp
           ports:
           - containerPort: 80
