@@ -16,4 +16,4 @@ spec:
         - name: cryptoapp 
           image: registruaks.azurecr.io/cryptoapp
           ports:
-          - containerPort: 80
+          - containerPort: 8051
