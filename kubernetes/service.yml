@@ -4,9 +4,9 @@ metadata:
     name: cryptoapp
 spec:
     type: LoadBalancer
-    ports:
-      - protocol: TCP
-      port: 80
-      targetPort: 8051
     selector:
         app: cryptoapp
+    ports:
+      protocol: TCP
+      port: 80
+      targetPort: 8051
