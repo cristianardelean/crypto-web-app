@@ -38,24 +38,25 @@ stages:
     displayName: Deploy to AKS
     pool: default
     steps:
-      - task: DownloadPipelineArtifact@2
-        inputs:
-          buildType: 'current'
-          artifactName: 'manifests'
-          targetPath: '$(Pipeline.Workspace)/manifests'
-      - task: KubernetesManifest@0
-        inputs:
-          action: 'createSecret'
-          kubernetesServiceConnection: 'k8s-connection'
-          namespace: 'default'
-          secretType: 'dockerRegistry'
-          secretName: '$(acrsecret)'
-          dockerRegistryEndpoint: 'acr-connection'
-      - task: KubernetesManifest@0
-        inputs:
-          action: 'deploy'
-          kubernetesServiceConnection: 'k8s-connection'
-          namespace: 'default'
-          manifests: |
-            '$(Pipeline.Workspace)/manifests/deployment.yml'
-            '$(Pipeline.Workspace)/manifests/service.yml'
+    - task: DownloadPipelineArtifact@2
+      inputs:
+        buildType: 'current'
+        artifactName: 'manifests'
+        targetPath: '$(Pipeline.Workspace)/manifests'
+    - task: KubernetesManifest@0
+      inputs:
+        action: 'createSecret'
+        kubernetesServiceConnection: 'k8s-connection'
+        namespace: 'default'
+        secretType: 'dockerRegistry'
+        secretName: '$(acrsecret)'
+        dockerRegistryEndpoint: 'acr-connection'
+
+    - task: KubernetesManifest@0
+      inputs:
+        action: 'deploy'
+        kubernetesServiceConnection: 'k8s-connection'
+        namespace: 'default'
+        manifests: |
+           '$(Pipeline.Workspace)/manifests/deployment.yml'
+           '$(Pipeline.Workspace)/manifests/service.yml'
