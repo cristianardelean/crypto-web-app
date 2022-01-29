@@ -29,6 +29,7 @@ stages:
   dependsOn: Build
   variables:
     acrsecret: k8sacrauth
+    acrurl: 'registruaks.azurecr.io'
   jobs:
   - job: Deploy
     displayName: Deploy to AKS
@@ -55,4 +56,8 @@ stages:
         manifests: |
          $(Pipeline.Workspace)/manifests/deployment.yml
          $(Pipeline.Workspace)/manifests/services.yml
+        containers: '$(acrurl)/$(imageRepo):$(tag)'
         imagePullSecrets: '$(acrsecret)'
+
+
+ registruaks.azurecr.io/cryptoapp
