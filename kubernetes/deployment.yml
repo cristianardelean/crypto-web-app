@@ -8,6 +8,7 @@ metadata:
 spec:
   containers:
   - image: "registruaks.azurecr.io/cryptoapp"
+  - name: crypto-image
     ports:
     - containerPort: 8051
       protocol: TCP
