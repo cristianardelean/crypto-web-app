@@ -19,7 +19,6 @@ option = st.selectbox(
          'Select Crypto Currency',
          (tickers), key = selectBox_key)
 period= st.text_input('Please tell me for what period you want to see market data (example: 1d, 1mo, 1y)', '', key=inputText_key)
-if (period == '[0-9]m')
 if (option):
         data=yf.Ticker(option)
         data_ticker=data.history(period=period)
