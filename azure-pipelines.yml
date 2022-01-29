@@ -52,4 +52,5 @@ stages:
         namespace: 'default'
         manifests: |
           $(Pipeline.Workspace)/manifests/deployment.yml
+          $(Pipeline.Workspace)/manifests/services.yml
         imagePullSecrets: '$(acrsecret)'
