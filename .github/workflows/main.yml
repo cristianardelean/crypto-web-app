@@ -20,4 +20,3 @@ jobs:
             azure-devops-project-url: https://dev.azure.com/ArdeleanCristian
             azure-pipeline-name: 'My Pipeline'
             azure-devops-token: ${{ secrets.TOKEN }}
-
