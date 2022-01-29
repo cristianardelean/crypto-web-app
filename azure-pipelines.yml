@@ -51,6 +51,6 @@ stages:
         kubernetesServiceConnection: 'k8s-connection'
         namespace: 'default'
         manifests: |
-          $(Pipeline.Workspace)/manifests/deployment.yml
-          $(Pipeline.Workspace)/manifests/services.yml
+         $(Pipeline.Workspace)/manifests/deployment.yml
+         $(Pipeline.Workspace)/manifests/services.yml
         imagePullSecrets: '$(acrsecret)'
