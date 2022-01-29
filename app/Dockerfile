@@ -14,4 +14,4 @@ enableCORS = false\n\
 # exposing default port for streamlit
 EXPOSE 8051
 COPY . .
-CMD [ "streamlit", "run",  "crypto_app.py"]
+CMD [ "streamlit", "run",  "crypto_app.py", "--server.port=80" ]
