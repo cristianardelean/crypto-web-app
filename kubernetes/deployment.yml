@@ -10,7 +10,7 @@ spec:
   - image: "registruaks.azurecr.io/cryptoapp"
     name: crypto-image
     ports:
-    - containerPort: 8051
+    - containerPort: 80
       protocol: TCP
 
 ---
@@ -24,8 +24,8 @@ spec:
     app: cryptoapp
   ports:
   - protocol: TCP
-    port: 8051
-    targetPort: 8051
+    port: 80
+    targetPort: 80
 
 ---
 
@@ -44,5 +44,5 @@ spec:
           service:
             name: cryptoapp
             port:
-              number: 8051
+              number: 80
         pathType: Exact
