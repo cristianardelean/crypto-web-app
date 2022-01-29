@@ -3,6 +3,7 @@ trigger :
 
 variables:
   imageRepo: cryptoapp
+  tag: '$(Build.BuildId)'
 stages:
 - stage: Build
   displayName: Build image
@@ -17,7 +18,9 @@ stages:
         repository: '$(imageRepo)'
         command: 'buildAndPush'
         Dockerfile: '$(Build.SourcesDirectory)/app/Dockerfile'
-        tags: 'latest'
+        tags: |
+          $(tag)
+          latest
     - task: PublishPipelineArtifact@1
       inputs:
         targetPath: '$(Pipeline.Workspace)/s/kubernetes'
