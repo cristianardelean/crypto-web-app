@@ -1,12 +1,4 @@
-FROM registruaks.azurecr.io/cryptoapp:86
+FROM registruaks.azurecr.io/cryptoapp:89
 ADD crypto_app.py crypto_currencies.txt static_images/
-RUN bash -c 'echo -e "\
-[general]\n\
-email = \"\"\n\
-" > /root/.streamlit/credentials.toml'
-RUN bash -c 'echo -e "\
-[server]\n\
-enableCORS = false\n\
-" > /root/.streamlit/config.toml'
 COPY . .
 CMD [ "streamlit", "run",  "crypto_app.py", "--server.port=80" ]
